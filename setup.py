@@ -13,8 +13,8 @@ setup(
         "lade",
         "jinja2>=3.1.3"
     ],
-    author='OpenBMB',
-    author_email='huang-yx21@mails.tsinghua.edu.cn',
+    author='TsinghuaNLP',
+    author_email='zwl23@mails.tsinghua.edu.cn, huang-yx21@mails.tsinghua.edu.cn, hanxu2022@tsinghua.edu.cn',
     description='Dual Decoding',
     long_description=open('README.md').read(),
 )
