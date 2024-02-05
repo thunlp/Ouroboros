@@ -17,4 +17,5 @@ setup(
     author_email='zwl23@mails.tsinghua.edu.cn, huang-yx21@mails.tsinghua.edu.cn, hanxu2022@tsinghua.edu.cn',
     description='Dual Decoding',
     long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
 )
