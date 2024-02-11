@@ -3,14 +3,14 @@ from tqdm import tqdm
 import torch
 
 from .kv_cache_model import KVCacheModelLade, KVCacheModelSimpleWithGuess
-from dualdec.cache_engine import CacheEngine
+from ouroboros.cache_engine import CacheEngine
 
 
 @torch.no_grad()
-def dualdec(prefix : torch.Tensor, approx_model : torch.nn.Module, target_model : torch.nn.Module, ngram_cache : CacheEngine = None,
+def ouroboros(prefix : torch.Tensor, approx_model : torch.nn.Module, target_model : torch.nn.Module, ngram_cache : CacheEngine = None,
                          max_len : int = 512 , gamma : int = 4, window_size = 20, guess_set_size = 20, lookahead_level = 7, eos_token_id = 2, topk = 3) -> torch.Tensor:
     """
-    Performs dual decoding with an approximate model and a target model to generate a sequence of tokens.
+    Performs ouroboros with an approximate model and a target model to generate a sequence of tokens.
 
     Args:
         prefix (torch.Tensor): The initial sequence of tokens to start the generation from.

@@ -50,7 +50,7 @@ import torch.distributed as dist
 import copy, inspect
 import warnings
 
-from dualdec.cache_engine import CacheEngine
+from ouroboros.cache_engine import CacheEngine
 
 if is_flash_attn_available():
     from flash_attn import flash_attn_func, flash_attn_varlen_func

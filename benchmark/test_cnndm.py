@@ -2,9 +2,9 @@ from datasets import load_dataset, load_metric, load_from_disk
 
 from transformers import AutoTokenizer
 
-from dualdec import dualdec
-from dualdec.models import LlamaForCausalLM
-from dualdec.cache_engine import CacheEngine
+from ouroboros import ouroboros
+from ouroboros.models import LlamaForCausalLM
+from ouroboros.cache_engine import CacheEngine
 
 import time, torch
 
@@ -102,9 +102,9 @@ class SyldModel:
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dualdec', action='store_true', help='Turn on Syld.')
-    parser.add_argument('--target_model', type=str, help='Model name or path of target model in both greedy mode or dualdec mode.')
-    parser.add_argument('--draft_model', type=str, help='Model name or path of draft model only in dualdec mode.')
+    parser.add_argument('--ouroboros', action='store_true', help='Turn on Syld.')
+    parser.add_argument('--target_model', type=str, help='Model name or path of target model in both greedy mode or ouroboros mode.')
+    parser.add_argument('--draft_model', type=str, help='Model name or path of draft model only in ouroboros mode.')
     parser.add_argument('--generate_len', type=int, help='Generate length during testing', default=128) 
     parser.add_argument('--data_path', type=str, help="Data path of the dataset")
     parser.add_argument('--gamma', type=int, default=10)
@@ -118,13 +118,13 @@ def parse():
 
 def main():
     args = parse()
-    if args.dualdec:
+    if args.ouroboros:
         small_model = LlamaForCausalLM.from_pretrained(args.draft_model, torch_dtype=torch.float16, device_map='auto')
         target_model = LlamaForCausalLM.from_pretrained(args.target_model, torch_dtype=torch.float16, device_map='auto')
         torch.cuda.empty_cache()
 
         tokenizer = AutoTokenizer.from_pretrained(args.target_model)
-        model = SyldModel(draft_model=small_model, target_model=target_model, tokenizer=tokenizer, test_func=dualdec, max_len=args.generate_len, gamma=args.gamma, window_size=args.window_size, guess_set_size=args.guess_set_size, lookahead_level=args.lookahead_level)
+        model = SyldModel(draft_model=small_model, target_model=target_model, tokenizer=tokenizer, test_func=ouroboros, max_len=args.generate_len, gamma=args.gamma, window_size=args.window_size, guess_set_size=args.guess_set_size, lookahead_level=args.lookahead_level)
     else:
         target_model = LlamaForCausalLM.from_pretrained(args.target_model, torch_dtype=torch.float16, device_map='auto')
         torch.cuda.empty_cache()
@@ -189,9 +189,9 @@ if __name__ == "__main__":
 '''
 Yi-34b:
     greedy: python test_cnndm.py --target_model <target_model_path> --data_path <data_path>
-    dualdec: python test_cnndm.py --target_model <target_model_path> --draft_model <draft_model_path> --data_path <data_path> --dualdec
+    ouroboros: python test_cnndm.py --target_model <target_model_path> --draft_model <draft_model_path> --data_path <data_path> --ouroboros
 
 Llama-70b:
     greedy: python test_cnndm.py --target_model <target_model_path> --data_path <data_path> --model_type chat
-    dualdec:   python test_cnndm.py --target_model <target_model_path> --draft_model <draft_model_path> --data_path <data_path> --dualdec --window_size 13 --guess_set_size 13 --lookahead_level 5 --gamma 4 --model_type chat
+    ouroboros:   python test_cnndm.py --target_model <target_model_path> --draft_model <draft_model_path> --data_path <data_path> --ouroboros --window_size 13 --guess_set_size 13 --lookahead_level 5 --gamma 4 --model_type chat
 '''

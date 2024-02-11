@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='dualdec',
+    name='ouroboros',
     version='0.1.0',
     packages=find_packages(),
     install_requires=[
@@ -15,7 +15,7 @@ setup(
     ],
     author='TsinghuaNLP',
     author_email='zwl23@mails.tsinghua.edu.cn, huang-yx21@mails.tsinghua.edu.cn, hanxu2022@tsinghua.edu.cn',
-    description='Dual Decoding',
+    description='Ouroboros',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
 )

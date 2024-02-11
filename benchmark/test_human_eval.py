@@ -5,9 +5,9 @@ from human_eval.evaluation import evaluate_functional_correctness
 
 from transformers import AutoTokenizer
 
-from dualdec import dualdec
-from dualdec.models import LlamaForCausalLM
-from dualdec.cache_engine import CacheEngine
+from ouroboros import ouroboros
+from ouroboros.models import LlamaForCausalLM
+from ouroboros.cache_engine import CacheEngine
 
 import time, torch
 
@@ -254,9 +254,9 @@ class SyldModel:
 
 def parse():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dualdec', action='store_true', help='Turn on Syld.')
-    parser.add_argument('--target_model', type=str, help='Model name or path of target model in both greedy mode or dualdec mode.')
-    parser.add_argument('--draft_model', type=str, help='Model name or path of draft model only in dualdec mode.')
+    parser.add_argument('--ouroboros', action='store_true', help='Turn on Syld.')
+    parser.add_argument('--target_model', type=str, help='Model name or path of target model in both greedy mode or ouroboros mode.')
+    parser.add_argument('--draft_model', type=str, help='Model name or path of draft model only in ouroboros mode.')
     parser.add_argument('--data_path', type=str, help="Data path of the dataset")
     parser.add_argument('--generate_len', type=int, help='Generate length during testing', default=512) 
     parser.add_argument('--gamma', type=int, default=12)
@@ -270,13 +270,13 @@ def parse():
 
 def main():
     args = parse()
-    if args.dualdec:
+    if args.ouroboros:
         small_model = LlamaForCausalLM.from_pretrained(args.draft_model, torch_dtype=torch.float16, device_map='auto')
         target_model = LlamaForCausalLM.from_pretrained(args.target_model, torch_dtype=torch.float16, device_map='auto')
         torch.cuda.empty_cache()
 
         tokenizer = AutoTokenizer.from_pretrained(args.target_model)
-        model = SyldModel(draft_model=small_model, target_model=target_model, tokenizer=tokenizer, test_func=dualdec, max_len=args.generate_len, gamma=args.gamma, window_size=args.window_size, guess_set_size=args.guess_set_size, lookahead_level=args.lookahead_level, eos_token_id=tokenizer.eos_token_id, model_type=args.model_type)
+        model = SyldModel(draft_model=small_model, target_model=target_model, tokenizer=tokenizer, test_func=ouroboros, max_len=args.generate_len, gamma=args.gamma, window_size=args.window_size, guess_set_size=args.guess_set_size, lookahead_level=args.lookahead_level, eos_token_id=tokenizer.eos_token_id, model_type=args.model_type)
     else:
         target_model = LlamaForCausalLM.from_pretrained(args.target_model, torch_dtype=torch.float16, device_map='auto')
         torch.cuda.empty_cache()
@@ -305,15 +305,15 @@ if __name__ == "__main__":
 '''
 Yi:
     greedy: python test_human_eval.py --target_model <target_model_name_or_path> --data_path <data_path>
-    dualdec:   python test_human_eval.py --target_model <target_model_name_or_path> --data_path <data_path> --draft_model <draft_model_name_or_path> --dualdec
+    ouroboros:   python test_human_eval.py --target_model <target_model_name_or_path> --data_path <data_path> --draft_model <draft_model_name_or_path> --ouroboros
 
 Deepseek:
     greedy: python test_human_eval.py --target_model <target_model_name_or_path> --data_path <data_path> --model_type deepseek
-    dualdec:   python test_human_eval.py --target_model <target_model_name_or_path> --data_path <data_path> --draft_model <draft_model_name_or_path> --dualdec --gamma 11 --model_type deepseek
+    ouroboros:   python test_human_eval.py --target_model <target_model_name_or_path> --data_path <data_path> --draft_model <draft_model_name_or_path> --ouroboros --gamma 11 --model_type deepseek
 
 CodeLlama:
     greedy: python test_human_eval.py --target_model <target_model_name_or_path> --data_path <data_path> 
-    dualdec:   python test_human_eval.py --target_model <target_model_name_or_path> --data_path <data_path> --draft_model <draft_model_name_or_path> --dualdec --model_type codellama --gamma 10 --lookahead_level 6
+    ouroboros:   python test_human_eval.py --target_model <target_model_name_or_path> --data_path <data_path> --draft_model <draft_model_name_or_path> --ouroboros --model_type codellama --gamma 10 --lookahead_level 6
     
 
 '''
