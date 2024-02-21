@@ -1,10 +1,10 @@
-<p>
-<img src="figure/logo.png" width="40" height="40" ="vertical-align:middle;"/> 
-<span align="center" style="font-size:24px;vertical-align:middle;">uroboros</span>
-</p>
+<div align="center">
+
+<h1><img src="figure/logo.png" height="34px" align="top"/>uroboros</h1>
 
 
-Ouroboros is a new decoding algorithm that has much faster generation speed compared with Speculative Decoding and Lookahead Decoding, without any training cost.
+**A train-less, much faster decoding algorithm compared with Speculative Decoding and Lookahead Decoding**
+</div>
 
 
 Here is an example of generation with prompt 
