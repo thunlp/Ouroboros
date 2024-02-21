@@ -1,4 +1,4 @@
-# Ouroboros
+# <img src="figure/logo.png" width="30" height="30" align="left"/> uroboros
 
 Ouroboros is a new decoding algorithm that has much faster generation speed compared with Speculative Decoding and Lookahead Decoding, without any training cost.
 
