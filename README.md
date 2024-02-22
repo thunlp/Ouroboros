@@ -135,7 +135,8 @@ Please cite our [paper](https://arxiv.org/abs/2402.13720) if you find our work v
 @article{ouroboros,
   title={Ouroboros: Speculative Decoding with Large Model Enhanced Drafting},
   author={Weilin Zhao, Yuxiang Huang, Xu Han, Chaojun Xiao, Zhiyuan Liu, Maosong Sun},
-  journal={arXiv preprint arXiv:TODO},
+  journal={arXiv preprint arXiv:2402.13720},
+  url={https://arxiv.org/abs/2402.13720}
   year={2024}
 }
 ```
