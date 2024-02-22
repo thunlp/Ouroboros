@@ -129,7 +129,7 @@ def ouroboros(prefix : torch.Tensor, approx_model : torch.nn.Module, target_mode
 
 ## Citation
 
-Please cite our [paper](TODO) if you find our work valuable.
+Please cite our [paper](https://arxiv.org/abs/2402.13720) if you find our work valuable.
 
 ```
 @article{ouroboros,
