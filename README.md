@@ -99,7 +99,7 @@ print(ouroboros_output[:,:64].equal(std_output[:,:64]))
 
 ### Using Ouroboros 
 
-- First, prepare two huggingface transformers models (the target model and draft model). Load the model with `LlamaForCausalLM` from `ouroboros.models`.
+- First, prepare two Hugging Face transformers models (the target model and draft model). Load the model with `LlamaForCausalLM` from `ouroboros.models`.
 - Then import the generation function `ouroboros` from `ouroboros`.
 - Call the function by the following parameters:
 ```python 
@@ -111,8 +111,8 @@ def ouroboros(prefix : torch.Tensor, approx_model : torch.nn.Module, target_mode
 
     Args:
         prefix (torch.Tensor): The initial sequence of tokens to start the generation from.
-        approx_model (torch.nn.Module): The approximate model used for initial token generation. The model should support huggingface transformers model methods.
-        target_model (torch.nn.Module): The target model used for refining the generated tokens. The model should support huggingface transformers model methods.
+        approx_model (torch.nn.Module): The approximate model used for initial token generation. The model should support Hugging Face transformers model methods.
+        target_model (torch.nn.Module): The target model used for refining the generated tokens. The model should support Hugging Face transformers model methods.
         ngram_cache (CacheEngine, optional): A cache engine for storing and retrieving n-gram predictions. Defaults to None, in which case a new cache engine is created.
         max_len (int, optional): The maximum length of the generated sequence. Defaults to 512.
         gamma (int, optional): The lookahead parameter for generation. Defaults to 4.
