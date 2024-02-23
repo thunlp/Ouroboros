@@ -49,7 +49,7 @@ Here are more experimental results on GSM8K, CNNDM and WMT16. Ouroboros with "â€
 ### Install from pip
 
 ```shell
-pip install ouroboros
+pip install ourodec
 ```
 
 ### Install from source code
