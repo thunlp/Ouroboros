@@ -23,26 +23,19 @@ The generation speed tested on HumanEval and MBPP are presented here. The shadow
 
 ![](figure/main_result_code.png)
 
-Here are more experimental results on GSM8K, CNNDM and WMT16. Ouroboros with "†" represents Ouroboros with warm start, and Ouroboros without "†" represents Ouroboros without warm start.
+## Method
 
-| Task   | Algorithm   | Yi 34b/6b tok/s | Yi 34b/6b speed-up | Llama-2 70b/7b tok/s | Llama-2 70b/7b speed-up |
-|--------|-------------|-----------------|----------|----------------------|----------|
-|GSM8k| Greedy      | 15.33           | 1.00     | 8.96                 | 1.00     |
-| GSM8k  | Speculative | 16.99           | 1.11     | 16.86                | 1.88     |
-|GSM8k| Lookahead   | 25.14           | 1.64     | 13.77                | 1.54     |
-|GSM8k| Ouroboros        | 26.41           | 1.72     | 22.18                | 2.48     |
-|GSM8k| Ouroboros†       | 28.23           | 1.84     | 24.03                | 2.68     |
-|CNN/DM| Greedy      | 14.62           | 1.00     | 8.12                 | 1.00     |
-| CNN/DM | Speculative | 17.82           | 1.22     | 12.77                | 1.57     |
-|CNN/DM| Lookahead   | 18.77           | 1.28     | 9.47                 | 1.17     |
-|CNN/DM| Ouroboros        | 21.24           | 1.45     | 14.62                | 1.80     |
-|CNN/DM| Ouroboros†       | 22.65           | 1.55     | 14.67                | 1.81     |
-|WMT16| Greedy      | 14.78           | 1.00     | 9.52                 | 1.00     |
-| WMT16  | Speculative | 17.48           | 1.18     | 14.72                | 1.55     |
-|WMT16| Lookahead   | 17.98           | 1.22     | 14.65                | 1.54     |
-|WMT16| Ouroboros        | 19.75           | 1.34     | 19.11                | 2.01     |
-|WMT16| Ouroboros†       | 19.94           | 1.35     | 19.27                | 2.02     |
+We utilize phrases to enhance the efficiency of the draft model in Speculative Sampling. These phrases are derived from the following sources:
+1. Lookahead Decoding: This method generates phrases concurrently with the forward pass of the draft model.
+2. Verification: Useful phrases identified during the verification phase of Speculative Sampling.
+3. Historical Contexts: Phrases generated from similar user prompts or similar tasks are leveraged.
 
+These phrases are then employed enhance the efficiency of the draft model by 2 ways, without affecting the draft quality:
+1. By enabling parallelization of the drafting process.
+2. By increasing the draft length, thereby generating multiple candidate drafts.
+
+![](figure/method_framework.png)
+![](figure/method_inspiration.png)
 
 ## Install
 
