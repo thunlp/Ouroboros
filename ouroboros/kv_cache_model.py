@@ -40,7 +40,7 @@ class KVCacheModelLade():
     
     @torch.no_grad()
     def rollback(self, end_pos : int):
-        for i in range(32):
+        for i in range(len(self.ctx['past_key_values'])):
             k = self.ctx['past_key_values'][i][0][:,:,:end_pos,:]
             v = self.ctx['past_key_values'][i][1][:,:,:end_pos,:]
             self.ctx['past_key_values'][i] = (k, v)
