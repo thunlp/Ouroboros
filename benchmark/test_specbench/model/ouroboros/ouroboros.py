@@ -209,6 +209,7 @@ def ouroboros_specbench(inputs, model, tokenizer, max_new_tokens, max_steps=512,
 
         guess = [item for sublist in guess for item in sublist]
         if n < prefix_len + gen_len - 1:
+            guess_num = len(guess) // guess_size
             # t = target_model_cache._prob_history[:, n, :].argmax(dim=-1, keepdim=True)
             t = target_model_cache._history[:, n].view(1, 1)
             if t == eos_token_id:
@@ -219,11 +220,11 @@ def ouroboros_specbench(inputs, model, tokenizer, max_new_tokens, max_steps=512,
             refined = target_model_cache._history[0, n:sep_pos].tolist()
 
             # suffix_refined = [target_model_cache._prob_history[0, sep_pos+i*guess_size:sep_pos+i*guess_size+guess_size, :].argmax(dim=-1).tolist() for i in range(len(guess))]
-            suffix_refined = [target_model_cache._history[0, sep_pos+i*guess_size:sep_pos+i*guess_size+guess_size].tolist() for i in range(len(guess))]
+            suffix_refined = [target_model_cache._history[0, sep_pos+i*guess_size:sep_pos+i*guess_size+guess_size].tolist() for i in range(guess_num)]
             for i in range(sep_pos - n):
                 ngram = refined[i+1:]
                 if len(ngram) < guess_size:
-                    for j in range(len(guess)):
+                    for j in range(guess_num):
                         ngram_cache.insert_simple(refined[i], tuple(ngram + suffix_refined[j][:guess_size-len(ngram)]))
                 else:
                     ngram_cache.insert_simple(refined[i], tuple(ngram[:guess_size]))
